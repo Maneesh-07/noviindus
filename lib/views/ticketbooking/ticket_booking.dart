@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:noviindus/core/color.dart';
+import 'package:noviindus/model/bus_list_model.dart';
 
 class BusBookingSelectPage extends StatefulWidget {
-  const BusBookingSelectPage({Key? key}) : super(key: key);
+  final Bus busSeat;
+  const BusBookingSelectPage({Key? key, required this.busSeat})
+      : super(key: key);
 
   @override
   State<BusBookingSelectPage> createState() => _BusBookingSelectPageState();
@@ -14,11 +17,11 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text("Select Seat"),
+        title: Text(widget.busSeat.name),
         titleTextStyle: const TextStyle(
-          fontSize: 28,
+          fontSize: 20,
           fontWeight: FontWeight.w900,
-          color: Colors.black,
+          color: kWhiteColor,
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -27,9 +30,9 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
           },
           color: Colors.red,
         ),
-        backgroundColor: Colors.grey[200],
+        backgroundColor: darkColor,
         elevation: 0,
-        foregroundColor: Colors.black,
+        foregroundColor: kWhiteColor,
         centerTitle: true,
       ),
       body: Column(
@@ -45,22 +48,22 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
                     color: darkColor, borderRadius: BorderRadius.circular(10)),
                 child: Stack(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Driver',
-                            style: TextStyle(
+                            widget.busSeat.driverName,
+                            style: const TextStyle(
                               fontSize: 22,
                               color: kWhiteColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'License no: PJ515196161655',
-                            style: TextStyle(
+                            widget.busSeat.driverLicenseNo,
+                            style: const TextStyle(
                               fontSize: 16,
                               color: kWhiteColor,
                             ),
