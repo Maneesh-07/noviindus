@@ -59,4 +59,8 @@ class AuthServices extends ChangeNotifier {
       fontSize: 16.0,
     );
   }
+   logOut() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove('token');
+  }
 }

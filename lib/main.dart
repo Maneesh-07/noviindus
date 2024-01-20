@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:noviindus/services/bus_listing.dart';
+import 'package:noviindus/services/driver_delete.dart';
+import 'package:noviindus/services/driver_listing.dart';
 import 'package:noviindus/services/login_service.dart';
-import 'package:noviindus/views/auth/login.dart';
+import 'package:noviindus/services/post_driver.dart';
+import 'package:noviindus/views/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,6 +24,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => BusProviderServices(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => DriverProviderServices(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DriverPostServices(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DriverDeletePostServices(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -28,7 +40,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: LoginScreen(),
+        home: const Splashscreen(),
       ),
     );
   }

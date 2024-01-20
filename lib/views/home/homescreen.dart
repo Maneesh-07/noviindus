@@ -5,6 +5,9 @@ import 'package:noviindus/core/color.dart';
 import 'package:noviindus/core/constant.dart';
 import 'package:noviindus/model/bus_list_model.dart';
 import 'package:noviindus/services/bus_listing.dart';
+import 'package:noviindus/services/login_service.dart';
+import 'package:noviindus/views/auth/login.dart';
+import 'package:noviindus/views/driver/list_driver.dart';
 import 'package:noviindus/views/ticketbooking/three_seat.dart';
 import 'package:noviindus/views/ticketbooking/ticket_booking.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final busProvider = Provider.of<BusProviderServices>(context);
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -23,11 +27,29 @@ class HomeScreen extends StatelessWidget {
               height: 90,
               width: MediaQuery.sizeOf(context).width,
               color: const Color(0xff2B2B2B),
-              child: Image.asset(
-                'assets/image 1.png',
-                height: 10,
-                width: 10,
-                scale: 2,
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 150,
+                  ),
+                  Image.asset(
+                    'assets/image 1.png',
+                    height: 80,
+                    width: 100,
+                    scale: 2,
+                  ),
+                  const SizedBox(
+                    width: 110,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        _showLogoutConfirmationDialog(context);
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                        color: kWhiteColor,
+                      ))
+                ],
               ),
             ),
             Row(
@@ -86,7 +108,9 @@ class HomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(8, 12, 8, 0),
                       child: GestureDetector(
                         onTap: () {
-                          
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const DriverScreen(),
+                          ));
                         },
                         child: Container(
                           height: 220,
@@ -120,7 +144,8 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 20, 0, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 20, 0, 0),
                                 child: Align(
                                     alignment: Alignment.bottomRight,
                                     child: Image.asset(
@@ -332,6 +357,50 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showLogoutConfirmationDialog(
+    BuildContext context,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final loginProvider = Provider.of<AuthServices>(context);
+        return AlertDialog(
+          title: Text(
+            'Logout',
+            style: TextStyle(),
+          ),
+          content: Text(
+            'Are you sure you want to log out?',
+            style: TextStyle(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                loginProvider.logOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ));
+              },
+              child: Text(
+                'Logout',
+                style: TextStyle(),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -44,7 +44,8 @@ class TextFormWidget extends StatelessWidget {
         ),
         child: TextFormField(
           controller: controller,
-          maxLines: 10,
+          maxLines: maxLine,
+          maxLength: maxLine,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(10),
             hintText: labelText,
